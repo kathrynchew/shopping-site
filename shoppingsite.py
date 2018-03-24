@@ -8,7 +8,6 @@ Authors: Joel Burton, Christian Fernandez, Meggie Mahnken, Katie Byers.
 
 from flask import Flask, render_template, redirect, flash, session
 import jinja2
-
 import melons
 
 app = Flask(__name__)
@@ -75,18 +74,22 @@ def show_shopping_cart():
     #
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
+    cart_melons = []
+    order_total = 0
 
     if 'cart' in session:
         cart = session['cart']
-        cart_melons = []
         for item, qty in cart.items():
-            cart_melons.append((melons.get_by_id(item), qty))
+            melons.get_by_id(item).qty = qty
+            melons.get_by_id(item).total_cost = qty * melons.get_by_id(item).price
+            order_total += melons.get_by_id(item).total_cost
+            cart_melons.append((melons.get_by_id(item)))
     else:
         flash("There is nothing in your cart right now!")
 
-    print cart_melons
+    # print cart_melons
 
-    return render_template("cart.html", cart_melons=cart_melons)
+    return render_template("cart.html", cart_melons=cart_melons, order_total=order_total)
 
 
 @app.route("/add_to_cart/<melon_id>")
