@@ -23,9 +23,9 @@
         {% endfor %}
     </tbody>
 </table>
-
-    <h3>Total: ${{ '%0.2f' | format((order_total)|float) }}</h3>
-
+<div align="left"; width="75%">
+    <h3 align="right">Total: ${{ '%0.2f' | format((order_total)|float) }}</h3>
+</div>
     <a href="/checkout" class="btn btn-large btn-primary">Check Out</a>
 
 {% endblock %}

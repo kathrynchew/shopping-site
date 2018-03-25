@@ -178,6 +178,7 @@ def process_login():
 def process_logout():
     """ Lets logged in user log out! """
     del session["email"]
+    del session["cart"]
     flash("You have successfully logged out. Goodbye!")
     return redirect("/melons")
 
@@ -194,4 +195,4 @@ def checkout():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")
